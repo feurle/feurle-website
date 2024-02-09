@@ -6,9 +6,9 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        echo '==> build'
+        echo '==> build ...'
         sh './gradlew clean build'
-        echo '==> build image'
+        echo '==> build image ...'
         sh './gradlew bootBuildImage'
       }
     }
