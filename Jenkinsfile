@@ -24,7 +24,7 @@ pipeline {
                     env.projectName = props.projectName
                     env.projectGroup = props.projectGroup
                     env.projectVersion = props.projectVersion
-                    env.projectImage = 'feurle/'+env.PROJECT_NAME+':'+env.PROJECT_VERSION
+                    env.projectImage = 'feurle/'+env.projectName+':'+env.project_version
                     env.projectImage1 = props.projectImage
                 }
                 echo "Project Name: $projectName"
