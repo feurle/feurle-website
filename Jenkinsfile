@@ -29,7 +29,7 @@ pipeline {
                 echo "Project Name: $projectName"
                 echo "Project Group: $projectGroup"
                 echo "Project Version: $projectVersion"
-                echo "Project Image: $projectImage - $projectImage1"
+                echo "Project Image: $projectImage"
             }
         }
         stage('Build Artefact') {
