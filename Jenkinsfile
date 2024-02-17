@@ -24,8 +24,7 @@ pipeline {
                     env.projectName = props.projectName
                     env.projectGroup = props.projectGroup
                     env.projectVersion = props.projectVersion
-                    env.projectImage = 'feurle/'+env.projectName+':'+env.project_version
-                    env.projectImage1 = props.projectImage
+                    env.projectImage = 'feurle/'+env.projectName+':'+env.projectVersion
                 }
                 echo "Project Name: $projectName"
                 echo "Project Group: $projectGroup"
@@ -46,7 +45,7 @@ pipeline {
                     def props = readProperties file: 'gradle.properties'
                     env.PROJECT_NAME = props['projectName']
                     env.PROJECT_VERSION = props['projectVersion']
-                    env.PROJECT_IMAGE = 'feurle/${PROJECT_NAME}:${PROJECT_VERSION}'
+                    env.PROJECT_IMAGE = 'feurle/'+env.PROJECT_NAME':'env.PROJECT_VERSION
                     withCredentials([string(credentialsId: 'DOCKER' ,variable:'SECRET')]) {
                         sh 'docker login -u feurle -p ${SECRET}'
                         sh 'docker push ${PROJECT_IMAGE}'
