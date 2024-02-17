@@ -57,6 +57,7 @@ pipeline {
                     def props = readProperties file: 'gradle.properties'
                     env.PROJECT_NAME = props['projectName']
                     env.PROJECT_VERSION = props['projectVersion']
+                    env.SCRIPT_PATH = '/appbase/'+env.PROJECT_NAME+'/redeploy.sh '+env.PROJECT_VERSION
                     withCredentials([sshUserPrivateKey(credentialsId: 'integration-user-test-key', keyFileVariable: 'KEY_FILE', usernameVariable: 'USERNAME')]) {
                                         def remote = [:]
                                         remote.name = DOMAIN_TEST
@@ -64,7 +65,7 @@ pipeline {
                                         remote.user = USERNAME
                                         remote.identityFile = KEY_FILE
                                         remote.allowAnyHosts = true
-                                        sshScript remote: remote, script: '/appbase/${PROJECT_NAME}/redeploy.sh ${PROJECT_VERSION}'
+                                        sshScript remote: remote, script: SCRIPT_PATH
                     }
                 }
                 echo '======================= END OF Jenkinsfile ======================='
