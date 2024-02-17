@@ -3,6 +3,9 @@ pipeline {
         ansiColor('xterm')
     }
     agent any
+    environment {
+
+    }
     stages {
         stage("Env Build Number" ){
             steps{
@@ -21,10 +24,13 @@ pipeline {
                     env.projectName = props.projectName
                     env.projectGroup = props.projectGroup
                     env.projectVersion = props.projectVersion
+                    env.projectImage = 'feurle/'+env.PROJECT_NAME+':'+env.PROJECT_VERSION
+                    env.projectImage1 = props.projectImage
                 }
                 echo "Project Name: $projectName"
                 echo "Project Group: $projectGroup"
                 echo "Project Version: $projectVersion"
+                echo "Project Image: $projectImage - $projectImage1"
             }
         }
         stage('Build Artefact') {
@@ -40,9 +46,10 @@ pipeline {
                     def props = readProperties file: 'gradle.properties'
                     env.PROJECT_NAME = props['projectName']
                     env.PROJECT_VERSION = props['projectVersion']
+                    env.PROJECT_IMAGE = 'feurle/${PROJECT_NAME}:${PROJECT_VERSION}'
                     withCredentials([string(credentialsId: 'DOCKER' ,variable:'SECRET')]) {
                         sh 'docker login -u feurle -p ${SECRET}'
-                        sh 'docker push feurle/${PROJECT_NAME}:${PROJECT_VERSION}'
+                        sh 'docker push ${PROJECT_IMAGE}'
                     }
                 }
             }
@@ -54,12 +61,12 @@ pipeline {
                     def deploymentCredentialsId = 'integration-user-test-key'
                     withCredentials([sshUserPrivateKey(credentialsId: 'integration-user-test-key', keyFileVariable: 'KEY_FILE', usernameVariable: 'USERNAME')]) {
                                         def remote = [:]
-                                        remote.name = 'einhorn'
+                                        remote.name = DOMAIN_TEST
                                         remote.host = DEPLOYMENT_HOST_TEST
                                         remote.user = USERNAME
                                         remote.identityFile = KEY_FILE
                                         remote.allowAnyHosts = true
-                                        sshCommand remote: remote, command: 'ls -lsa'
+                                        sshScript remote: remote, script: '/appbase/feurle-website/redeploy.sh ${PROJECT_IMAGE}'
                     }
                 }
                 echo '======================= END OF Jenkinsfile ======================='
