@@ -22,13 +22,9 @@ pipeline {
                 script {
                     def props = readProperties file: 'gradle.properties'
                     env.projectName = props.projectName
-                    env.projectGroup = props.projectGroup
                     env.projectVersion = props.projectVersion
                     env.projectImage = 'feurle/'+env.projectName+':'+env.projectVersion
                 }
-                echo "Project Name: $projectName"
-                echo "Project Group: $projectGroup"
-                echo "Project Version: $projectVersion"
                 echo "Project Image: $projectImage"
             }
         }
@@ -58,6 +54,9 @@ pipeline {
             steps {
                 script {
                     def deploymentCredentialsId = 'integration-user-test-key'
+                    def props = readProperties file: 'gradle.properties'
+                    env.PROJECT_NAME = props['projectName']
+                    env.PROJECT_VERSION = props['projectVersion']
                     withCredentials([sshUserPrivateKey(credentialsId: 'integration-user-test-key', keyFileVariable: 'KEY_FILE', usernameVariable: 'USERNAME')]) {
                                         def remote = [:]
                                         remote.name = DOMAIN_TEST
@@ -65,7 +64,7 @@ pipeline {
                                         remote.user = USERNAME
                                         remote.identityFile = KEY_FILE
                                         remote.allowAnyHosts = true
-                                        sshScript remote: remote, script: '/appbase/feurle-website/redeploy.sh ${PROJECT_IMAGE}'
+                                        sshScript remote: remote, script: '/appbase/${PROJECT_NAME}/redeploy.sh ${PROJECT_VERSION}'
                     }
                 }
                 echo '======================= END OF Jenkinsfile ======================='
