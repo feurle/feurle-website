@@ -45,7 +45,7 @@ pipeline {
                     def props = readProperties file: 'gradle.properties'
                     env.PROJECT_NAME = props['projectName']
                     env.PROJECT_VERSION = props['projectVersion']
-                    env.PROJECT_IMAGE = 'feurle/'+env.PROJECT_NAME':'env.PROJECT_VERSION
+                    env.PROJECT_IMAGE = 'feurle/'+env.PROJECT_NAME+':'+env.PROJECT_VERSION
                     withCredentials([string(credentialsId: 'DOCKER' ,variable:'SECRET')]) {
                         sh 'docker login -u feurle -p ${SECRET}'
                         sh 'docker push ${PROJECT_IMAGE}'
