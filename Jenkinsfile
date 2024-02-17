@@ -4,7 +4,7 @@ pipeline {
     }
     agent any
     environment {
-
+        MY_KEY = 'MY_VALUE'
     }
     stages {
         stage("Env Build Number" ){
