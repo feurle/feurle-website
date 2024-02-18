@@ -57,7 +57,8 @@ pipeline {
                     def props = readProperties file: 'gradle.properties'
                     env.PROJECT_NAME = props['projectName']
                     env.PROJECT_VERSION = props['projectVersion']
-                    env.SCRIPT_PATH = '/appbase/'+env.PROJECT_NAME+'/redeploy.sh '+env.PROJECT_VERSION
+                    env.PROJECT_IMAGE = 'feurle/'+env.PROJECT_NAME+':'+env.PROJECT_VERSION
+                    env.SCRIPT_PATH = '/appbase/'+env.PROJECT_NAME+'/redeploy.sh '+env.PROJECT_IMAGE+' '+env.PROJECT_NAME
                     withCredentials([sshUserPrivateKey(credentialsId: 'integration-user-test-key', keyFileVariable: 'KEY_FILE', usernameVariable: 'USERNAME')]) {
                                         def remote = [:]
                                         remote.name = DOMAIN_TEST
