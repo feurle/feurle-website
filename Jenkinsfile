@@ -67,7 +67,7 @@ pipeline {
                                         remote.user = USERNAME
                                         remote.identityFile = KEY_FILE
                                         remote.allowAnyHosts = true
-                                        sshScript remote: remote, script: SCRIPT_PATH
+                                        sshScript remote: remote, script: '$SCRIPT_PATH'
                     }
                 }
                 echo '======================= END OF Jenkinsfile ======================='
