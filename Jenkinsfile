@@ -58,7 +58,7 @@ pipeline {
                     env.PROJECT_NAME = props['projectName']
                     env.PROJECT_VERSION = props['projectVersion']
                     env.PROJECT_IMAGE = 'feurle/'+env.PROJECT_NAME+':'+env.PROJECT_VERSION
-                    env.SCRIPT_PATH = '/appbase/'+env.PROJECT_NAME+'/redeploy.sh '+env.PROJECT_IMAGE+' '+env.PROJECT_NAME
+                    env.SCRIPT_PATH = 'bash -c "/appbase/'+env.PROJECT_NAME+'/redeploy.sh '+env.PROJECT_IMAGE+' '+env.PROJECT_NAME+'"'
                     echo "Execute deployscript: $SCRIPT_PATH"
                     withCredentials([sshUserPrivateKey(credentialsId: 'integration-user-test-key', keyFileVariable: 'KEY_FILE', usernameVariable: 'USERNAME')]) {
                                         def remote = [:]
@@ -67,7 +67,7 @@ pipeline {
                                         remote.user = USERNAME
                                         remote.identityFile = KEY_FILE
                                         remote.allowAnyHosts = true
-                                        sshScript remote: remote, script: '$SCRIPT_PATH'
+                                        sshCommand remote: remote, command: SCRIPT_PATH
                     }
                 }
                 echo '======================= END OF Jenkinsfile ======================='
