@@ -51,6 +51,9 @@ pipeline {
         }
 
         stage('Deploy Artefact') {
+            when {
+                branch 'develop'
+            }
             steps {
                 script {
                     def deploymentCredentialsId = 'integration-user-test-key'
