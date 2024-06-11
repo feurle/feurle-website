@@ -1,9 +1,8 @@
 package com.feurle.website.controller;
 
 
-import com.feurle.website.model.Content;
-import com.feurle.website.model.ContentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.feurle.website.domain.Content;
+import com.feurle.website.domain.ContentRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
