@@ -1,4 +1,8 @@
 spring:
-  data:
-    rest:
-      base-path: /api/v2
+  application:
+    name: feurle-website
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,prometheus

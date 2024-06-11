@@ -1,7 +1,6 @@
-package com.feurle.website.model;
+package com.feurle.website.domain;
 
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
