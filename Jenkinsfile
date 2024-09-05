@@ -52,9 +52,7 @@ pipeline {
 
         stage('Test1') {
             when {
-                not {
-                    branch 'develop'
-                }
+                branch 'develop'
             }
             echo "### develop"
         }
