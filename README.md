@@ -3,7 +3,6 @@
 This is a small Spring Boot project for a personal
 website.
 
-
 ## Build Pipeline
 
 ### Jenkins Environment Variables
