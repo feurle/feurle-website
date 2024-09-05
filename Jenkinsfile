@@ -54,7 +54,10 @@ pipeline {
             when {
                 branch 'develop'
             }
-            echo "### develop"
+            steps {
+                echo "### develop"
+            }
+
         }
 
 
@@ -64,7 +67,10 @@ pipeline {
                     branch 'develop'
                 }
             }
-            echo "### not develop"
+            steps {
+                echo "### not develop"
+            }
+
         }
 
 
