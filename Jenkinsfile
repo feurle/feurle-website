@@ -50,6 +50,26 @@ pipeline {
             }
         }
 
+        stage('Test1') {
+            when {
+                not {
+                    branch 'develop'
+                }
+            }
+            echo "### develop"
+        }
+
+
+        stage('Test2') {
+            when {
+                not {
+                    branch 'develop'
+                }
+            }
+            echo "### not develop"
+        }
+
+
         stage('Deploy Artefact') {
             when {
                 branch 'develop'
